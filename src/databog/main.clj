@@ -7,7 +7,7 @@
 (t/defalias Id t/Num)
 (t/defalias TempId t/Num)
 
-(t/defalias DatomValue (t/U ID))
+(t/defalias DatomValue (t/U Id t/Bool))
 
 (t/defalias TxDatom  (t/HVec [t/Keyword Id Attribute DatomValue]))
 
