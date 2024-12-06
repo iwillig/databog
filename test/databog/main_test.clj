@@ -2,4 +2,6 @@
   (:require [clojure.test :as t :refer [deftest is testing]]))
 
 (deftest test-okay
-  (is (true? false)))
+
+  (testing "does this work?"
+    (is (true? false))))

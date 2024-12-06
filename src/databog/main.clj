@@ -1,6 +1,6 @@
 (ns databog.main
   (:require
-    [typed.clojure :as t]))
+   [typed.clojure :as t]))
 
 
 (t/defalias Attribute t/Keyword)
@@ -9,9 +9,9 @@
 
 (t/defalias DatomValue (t/U ID))
 
-(t/defalias TxDatom  (t/HVec [t/Keyword ID Attribute DatomValue]))
+(t/defalias TxDatom  (t/HVec [t/Keyword Id Attribute DatomValue]))
 
-(t/defalias TxDatoms (t/Vec TxData))
+(t/defalias TxDatoms (t/Vec TxDatom))
 
 
 (defrecord IdMapping
@@ -27,7 +27,7 @@
   [tx-data id-mappings])
 
 
-(t/ann-record TxDataPart [tx-data :- t/Any id-mappings :- IdMappings])
+(t/ann-record TxDataPart [tx-data :- TxDatoms id-mappings :- IdMappings])
 
 
 (defn id-mapping
@@ -42,13 +42,10 @@
 
 
 (defn tx-data
-  ([id-key-mapping tx-data]
-   (map->TxDataPart {:tx-data tx-data
-                     :id-mappings
-                     (if (vector? id-key-mapping)
-                       id-key-mapping
-                       [id-key-mapping])})))
-
+  ([id-key-mappings tx-data]
+   (map->TxDataPart
+    {:tx-data     tx-data
+     :id-mappings id-key-mappings})))
 
 (t/ann tx-data [(t/Vec IdMapping)
                 (t/Vec TxDatom) -> TxDataPart])

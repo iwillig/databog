@@ -1,57 +1,65 @@
 {:paths ["scripts"]
 
- :deps {medley/medley {:mvn/version "1.3.0"}
-        lread/status-line {:git/url "https://github.com/lread/status-line.git"
-                           :sha "cf44c15f30ea3867227fa61ceb823e5e942c707f"}}
+ :deps {medley/medley                      {:mvn/version "1.3.0"}
+        lread/status-line                  {:git/url "https://github.com/lread/status-line.git"
+                                            :sha     "cf44c15f30ea3867227fa61ceb823e5e942c707f"}}
 
  :tasks
  {:requires ([babashka.fs :as fs]
              [lread.status-line :as status])
 
+  check
+  {:doc  "Task to typed check some of the namespaces"
+   :task (do
+           (status/line :head "type-checking")
+           (time
+            (clojure "-M:dev:check")))}
+
   clean
-  {:doc "Cleans the temp build files"
+  {:doc  "Cleans the temp build files"
    :task (do
            (status/line :head "clean")
            (fs/delete-tree "target")
            (fs/delete-if-exists "junit.xml"))}
 
   test
-  {:doc "Runs the projects with kocha"
+  {:doc  "Runs the projects with kocha"
    :task (do
            (status/line :head "running-tests")
            (time
             (clojure "-M:jvm-base:dev:tests")))}
 
   lint
-  {:doc "Lints the code base with clj-kondo"
+  {:doc  "Lints the code base with clj-kondo"
    :task (do
            (status/line :head "running-lint")
            (time
-            (clojure "-M:lint --lint src test dev")))}
+            (clojure "-M:lint --lint src test")))}
 
   outdated
-  {:doc "Run command to detect outdate version of our deps"
+  {:doc  "Run command to detect outdate version of our deps"
    :task (clojure "-M:dev:outdated")}
 
   codox
-  {:doc "Builds codox"
+  {:doc  "Builds codox"
    :task (clojure "-X:codox")}
 
   nrepl
-  {:doc "Run a nRepl"
+  {:doc  "Run a nRepl"
    :task (clojure
           "-M:jvm-base:dev:nrepl" "-m" "nrepl.cmdline")}
 
   fmt
-  {:doc "Format clojure code"
+  {:doc  "Format clojure code"
    :task (clojure "-M:dev:format -m cljfmt.main fix src dev")}
 
   docs
-  {:doc "Builds documentation"
+  {:doc  "Builds documentation"
    :task (do (run 'codox))}
 
   ci
-  {:doc "Runs linting and tests for the CI"
+  {:doc  "Runs linting and tests for the CI"
    :task (do (run 'clean)
+             (run 'check)
              (run 'lint)
              (run 'test))}}}
