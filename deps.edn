@@ -4,17 +4,18 @@
 
  :paths ["src" "dev" "test" "resources"]
 
- :aliases {:dev {:extra-deps {lambdaisland/kaocha                {:mvn/version "1.87.1366"}
-                              lambdaisland/kaocha-cloverage      {:mvn/version "1.1.89"}
-                              lambdaisland/kaocha-junit-xml      {:mvn/version "1.17.101"}
-                              org.typedclojure/typed.clj.checker {:mvn/version "1.2.1"}
-                              dev.glossa/metazoa                 {:mvn/version "0.2.298"}
-                              cider/cider-nrepl                  {:mvn/version "0.50.2"}
-                              vvvvalvalval/scope-capture         {:mvn/version "0.3.3"}
-                              org.clojure/tools.nrepl            {:mvn/version "0.2.11"}
-                              ring/ring-mock                     {:mvn/version "0.4.0"}
-                              nubank/matcher-combinators         {:mvn/version "3.9.1"}
-                              org.clojure/test.check             {:mvn/version "1.1.1"}}}
+ :aliases {:dev {:extra-deps
+                 {lambdaisland/kaocha                {:mvn/version "1.87.1366"}
+                  lambdaisland/kaocha-cloverage      {:mvn/version "1.1.89"}
+                  lambdaisland/kaocha-junit-xml      {:mvn/version "1.17.101"}
+                  org.typedclojure/typed.clj.checker {:mvn/version "1.2.1"}
+                  dev.glossa/metazoa                 {:mvn/version "0.2.298"}
+                  cider/cider-nrepl                  {:mvn/version "0.50.2"}
+                  vvvvalvalval/scope-capture         {:mvn/version "0.3.3"}
+                  org.clojure/tools.nrepl            {:mvn/version "0.2.11"}
+                  ring/ring-mock                     {:mvn/version "0.4.0"}
+                  nubank/matcher-combinators         {:mvn/version "3.9.1"}
+                  org.clojure/test.check             {:mvn/version "1.1.1"}}}
 
            :jvm-base
            {:jvm-opts ["-XX:-OmitStackTraceInFastThrow"]}
