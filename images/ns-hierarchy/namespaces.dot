@@ -1,0 +1,8 @@
+digraph {
+graph[dpi=100, rankdir=TP]
+node[fontname="Monospace"]
+edge[fontname="Monospace"]
+
+node1586[label="databog.tx-data", style=solid]
+node1587[label="databog.main", style=solid]
+}

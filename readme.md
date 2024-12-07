@@ -2,6 +2,8 @@
 
 A library for managing Datalog database systems.
 
+![Namespace Diagrams](images/ns-hierarchy/namespaces.png "Namespace diagram")
+
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
@@ -26,7 +28,7 @@ A library for managing Datalog database systems.
 
 1. [Clojure/JVM](https://clojure.org/)
 2. [Babashka](https://babashka.org/)
-
+3. [Pandoc](https://pandoc.org/)
 
 ```shell
 bb main
@@ -51,4 +53,11 @@ bb type-check
 
 ```shell
 bb docs
+```
+
+
+Process readme markdown file
+
+```shell
+pandoc -f markdown -t json readme.md | jet --from json --to edn --keywordize > readme.edn
 ```

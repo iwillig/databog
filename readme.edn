@@ -1,0 +1,147 @@
+{:pandoc-api-version [1 23 1],
+ :meta {},
+ :blocks [{:t "Header",
+           :c [1 ["databog" [] []] [{:t "Str", :c "Databog"}]]}
+          {:t "Para",
+           :c [{:t "Str", :c "A"}
+               {:t "Space"}
+               {:t "Str", :c "library"}
+               {:t "Space"}
+               {:t "Str", :c "for"}
+               {:t "Space"}
+               {:t "Str", :c "managing"}
+               {:t "Space"}
+               {:t "Str", :c "Datalog"}
+               {:t "Space"}
+               {:t "Str", :c "database"}
+               {:t "Space"}
+               {:t "Str", :c "systems."}]}
+          {:t "RawBlock",
+           :c ["html"
+               "<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->"]}
+          {:t "Para",
+           :c [{:t "Strong",
+                :c [{:t "Str", :c "Table"}
+                    {:t "Space"}
+                    {:t "Str", :c "of"}
+                    {:t "Space"}
+                    {:t "Str", :c "Contents"}]}]}
+          {:t "BulletList",
+           :c [[{:t "Plain",
+                 :c [{:t "Link",
+                      :c [["" [] []]
+                          [{:t "Str", :c "Databog"}]
+                          ["#databog" ""]]}]}
+                {:t "BulletList",
+                 :c [[{:t "Plain",
+                       :c [{:t "Link",
+                            :c [["" [] []]
+                                [{:t "Str", :c "Ideas"}]
+                                ["#ideas" ""]]}]}]
+                     [{:t "Plain",
+                       :c [{:t "Link",
+                            :c [["" [] []]
+                                [{:t "Str", :c "Install"}]
+                                ["#install" ""]]}]}]
+                     [{:t "Plain",
+                       :c [{:t "Link",
+                            :c [["" [] []]
+                                [{:t "Str", :c "Test"}]
+                                ["#test" ""]]}]}]
+                     [{:t "Plain",
+                       :c [{:t "Link",
+                            :c [["" [] []]
+                                [{:t "Str", :c "Type"}
+                                 {:t "Space"}
+                                 {:t "Str", :c "Check"}]
+                                ["#type-check" ""]]}]}]
+                     [{:t "Plain",
+                       :c [{:t "Link",
+                            :c [["" [] []]
+                                [{:t "Str", :c "Documentations"}]
+                                ["#documentations" ""]]}]}]]}]]}
+          {:t "RawBlock", :c ["html" "<!-- markdown-toc end -->"]}
+          {:t "Header",
+           :c [2 ["ideas" [] []] [{:t "Str", :c "Ideas"}]]}
+          {:t "BulletList",
+           :c [[{:t "Plain",
+                 :c [{:t "Str", :c "DOING"}
+                     {:t "Space"}
+                     {:t "Str", :c "Typed"}
+                     {:t "Space"}
+                     {:t "Str", :c "Clojure"}
+                     {:t "Space"}
+                     {:t "Str", :c "annonations"}
+                     {:t "Space"}
+                     {:t "Str", :c "for"}
+                     {:t "Space"}
+                     {:t "Str", :c "Datom/Datalog"}
+                     {:t "Space"}
+                     {:t "Str", :c "datoms"}]}]
+               [{:t "Plain",
+                 :c [{:t "Str", :c "TODO"}
+                     {:t "Space"}
+                     {:t "Str", :c "GraphQL"}
+                     {:t "Space"}
+                     {:t "Str", :c "generation"}
+                     {:t "Space"}
+                     {:t "Str", :c "from"}
+                     {:t "Space"}
+                     {:t "Str", :c "Datalog"}
+                     {:t "Space"}
+                     {:t "Str", :c "Attributes"}]}]
+               [{:t "Plain",
+                 :c [{:t "Str", :c "TODO"}
+                     {:t "Space"}
+                     {:t "Str", :c "GraphQL"}
+                     {:t "Space"}
+                     {:t "Str", :c "validator"}]}]
+               [{:t "Plain",
+                 :c [{:t "Str", :c "isort"}
+                     {:t "Space"}
+                     {:t "Str", :c "for"}
+                     {:t "Space"}
+                     {:t "Str", :c "clojure?"}]}]]}
+          {:t "Header",
+           :c [2 ["install" [] []] [{:t "Str", :c "Install"}]]}
+          {:t "OrderedList",
+           :c [[1 {:t "Decimal"} {:t "Period"}]
+               [[{:t "Plain",
+                  :c [{:t "Link",
+                       :c [["" [] []]
+                           [{:t "Str", :c "Clojure/JVM"}]
+                           ["https://clojure.org/" ""]]}]}]
+                [{:t "Plain",
+                  :c [{:t "Link",
+                       :c [["" [] []]
+                           [{:t "Str", :c "Babashka"}]
+                           ["https://babashka.org/" ""]]}]}]
+                [{:t "Plain",
+                  :c [{:t "Link",
+                       :c [["" [] []]
+                           [{:t "Str", :c "Pandoc"}]
+                           ["https://pandoc.org/" ""]]}]}]]]}
+          {:t "CodeBlock", :c [["" ["shell"] []] "bb main"]}
+          {:t "Header", :c [2 ["test" [] []] [{:t "Str", :c "Test"}]]}
+          {:t "CodeBlock", :c [["" ["shell"] []] "bb test"]}
+          {:t "Header",
+           :c [2
+               ["type-check" [] []]
+               [{:t "Str", :c "Type"}
+                {:t "Space"}
+                {:t "Str", :c "Check"}]]}
+          {:t "CodeBlock", :c [["" ["shell"] []] "bb type-check"]}
+          {:t "Header",
+           :c [2
+               ["documentations" [] []]
+               [{:t "Str", :c "Documentations"}]]}
+          {:t "CodeBlock", :c [["" ["shell"] []] "bb docs"]}
+          {:t "Para",
+           :c [{:t "Str", :c "Process"}
+               {:t "Space"}
+               {:t "Str", :c "markdown"}
+               {:t "Space"}
+               {:t "Str", :c "file"}]}
+          {:t "CodeBlock",
+           :c [["" ["shell"] []]
+               "pandoc -f markdown -t json readme.md | jet --from json --to edn --keywordize > readme.edn"]}]}
