@@ -1,5 +1,8 @@
 {:deps
  {org.clojure/clojure                {:mvn/version "1.12.0"}
+  net.sourceforge.plantuml/plantuml  {:mvn/version "8059"}
+  clj-antlr/clj-antlr                {:mvn/version "0.2.13"}
+  metosin/jsonista                   {:mvn/version "0.3.12"}
   org.typedclojure/typed.clj.runtime {:mvn/version "1.2.1"}}
 
  :paths ["src" "dev" "test" "scripts" "resources"]
@@ -8,6 +11,7 @@
                  {lambdaisland/kaocha                {:mvn/version "1.87.1366"}
                   lambdaisland/kaocha-cloverage      {:mvn/version "1.1.89"}
                   lambdaisland/kaocha-junit-xml      {:mvn/version "1.17.101"}
+                  org.languagetool/language-en       {:mvn/version "6.5"}
                   io.replikativ/datahike             {:mvn/version "0.6.1594"}
                   org.typedclojure/typed.clj.checker {:mvn/version "1.2.1"}
                   dev.glossa/metazoa                 {:mvn/version "0.2.298"}
@@ -23,10 +27,10 @@
 
 
            :hiera
-           {:deps {io.github.greglook/clj-hiera {:git/tag "2.0.0", :git/sha "b14e514"}}
-            :exec-fn hiera.main/graph
-            :exec-args  {:source-paths ["src"]
-                         :output "images/ns-hierarchy"}}
+           {:deps      {io.github.greglook/clj-hiera {:git/tag "2.0.0", :git/sha "b14e514"}}
+            :exec-fn   hiera.main/graph
+            :exec-args {:source-paths ["src"]
+                        :output       "images/ns-hierarchy"}}
 
            :nrepl
            {:extra-deps
@@ -34,6 +38,9 @@
 
            :type-check
            {:main-opts ["-m" "typecheck.check"]}
+
+           :transform-pandoc
+           {:main-opts ["-m" "pandoc.main"]}
 
            ;; Add test deps to the dev aliases
            :tests

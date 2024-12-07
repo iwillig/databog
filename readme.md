@@ -25,8 +25,11 @@ A library for managing Datalog database systems.
 - [] TODO Clojure Parsing and Code generations tools
 - [] TODO GraphQL generation from Datalog Attributes
 - [] TODO GraphQL validator
+- [] TODO GraphQL Code Coverage
+- [] TODO GraphQL Fake API backed by in memory DataHike database
 - [] TODO TypedClojure -> GraphQL?
 - [] TODO isort for clojure?
+
 
 ## Install
 
@@ -64,4 +67,5 @@ Process readme markdown file
 
 ```shell
 pandoc -f markdown -t json readme.md | jet --from json --to edn --keywordize > readme.edn
+pandoc -f markdown -t json readme.md --filter bin/t-pandoc
 ```

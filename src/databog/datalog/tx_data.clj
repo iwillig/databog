@@ -1,4 +1,4 @@
-(ns databog.tx-data
+(ns databog.datalog.tx-data
   (:require
    [typed.clojure :as t])
   (:import

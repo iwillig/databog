@@ -6,7 +6,10 @@
 
  :tasks
  {:requires ([babashka.fs :as fs]
+             [babashka.process :as p]
              [lread.status-line :as status])
+
+
 
   type-check
   {:doc  "Task to typed check some of the namespaces"
@@ -46,6 +49,19 @@
   doc-hiera
   {:doc  "Builds hiera documentation"
    :task (clojure "-X:dev:hiera")}
+
+  doc-pandoc
+  {:doc "Build pandoc"
+   :task (do (shell
+              "pandoc -f markdown -t markdown readme.md --filter bin/t-pandoc"))}
+  test-pdoc
+  {:doc "Test pandoc transform"
+   :task (do (shell "pandoc -f markdown -t json readme.md -o readme.json")
+             (-> (p/process "cat readme.json")
+                 (p/process {:out :string} "bin/t-pandoc")
+                 (deref)
+                 (:out)
+                 (println)))}
 
   nrepl
   {:doc  "Run a nRepl"
