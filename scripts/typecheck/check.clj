@@ -1,6 +1,6 @@
 (ns typecheck.check
   (:require
-   [databog.main]
+   [databog.datalog.tx-data]
    [typed.clojure :as t]))
 
 (defn -main
