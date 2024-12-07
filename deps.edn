@@ -1,6 +1,5 @@
 {:deps
  {org.clojure/clojure                {:mvn/version "1.12.0"}
-  io.replikativ/datahike             {:mvn/version "0.6.1594"}
   org.typedclojure/typed.clj.runtime {:mvn/version "1.2.1"}}
 
  :paths ["src" "dev" "test" "scripts" "resources"]
@@ -9,14 +8,15 @@
                  {lambdaisland/kaocha                {:mvn/version "1.87.1366"}
                   lambdaisland/kaocha-cloverage      {:mvn/version "1.1.89"}
                   lambdaisland/kaocha-junit-xml      {:mvn/version "1.17.101"}
+                  io.replikativ/datahike             {:mvn/version "0.6.1594"}
                   org.typedclojure/typed.clj.checker {:mvn/version "1.2.1"}
                   dev.glossa/metazoa                 {:mvn/version "0.2.298"}
                   cider/cider-nrepl                  {:mvn/version "0.50.2"}
                   vvvvalvalval/scope-capture         {:mvn/version "0.3.3"}
                   org.clojure/tools.nrepl            {:mvn/version "0.2.11"}
-                  ring/ring-mock                     {:mvn/version "0.4.0"}
                   nubank/matcher-combinators         {:mvn/version "3.9.1"}
-                  org.clojure/test.check             {:mvn/version "1.1.1"}}}
+                  org.clojure/test.check             {:mvn/version "1.1.1"}
+                  com.gfredericks/test.chuck         {:mvn/version "0.2.13"}}}
 
            :jvm-base
            {:jvm-opts ["-XX:-OmitStackTraceInFastThrow"]}
@@ -28,16 +28,17 @@
            :type-check
            {:main-opts ["-m" "typecheck.check"]}
 
+           ;; Add test deps to the dev aliases
            :tests
            {:extra-deps {}
             :main-opts  ["-m" "kaocha.runner"]}
 
            :lint
-           {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2022.09.08"}}
-            :main-opts  ["-m" "clj-kondo.main"]}
+           {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2022.09.08"}}}
 
-           :format {:deps
-                    {dev.weavejester/cljfmt {:mvn/version "0.13.0"}}}
+           :format {:extra-deps
+                    {dev.weavejester/cljfmt {:mvn/version "0.13.0"}
+                     mvxcvi/cljstyle        {:mvn/version "0.16.630"}}}
 
            :codox {:extra-deps {codox/codox {:mvn/version "0.10.8"}}
                    :metadata   {:doc/format :markdown}
@@ -45,5 +46,4 @@
                    :exec-args  {:source-paths ["src"]}}
 
            :outdated
-           {:extra-deps {olical/depot {:mvn/version "1.8.4"}}
-            :main-opts  ["-m" "depot.outdated.main"]}}}
+           {:extra-deps {olical/depot {:mvn/version "1.8.4"}}}}}

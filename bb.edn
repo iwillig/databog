@@ -34,15 +34,15 @@
    :task (do
            (status/line :head "running-lint")
            (time
-            (clojure "-M:lint --lint src test")))}
+            (clojure "-M:lint -m clj-kondo.main --lint src test")))}
 
   outdated
   {:doc  "Run command to detect outdate version of our deps"
-   :task (clojure "-M:dev:outdated")}
+   :task (clojure "-M:dev:outdated -m depot.outdated.main")}
 
   codox
   {:doc  "Builds codox"
-   :task (clojure "-X:codox")}
+   :task (clojure "-X:dev:codox")}
 
   nrepl
   {:doc  "Run a nRepl"
@@ -60,6 +60,6 @@
   ci
   {:doc  "Runs linting and tests for the CI"
    :task (do (run 'clean)
-             (run 'check)
+             (run 'type-check)
              (run 'lint)
              (run 'test))}}}

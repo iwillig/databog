@@ -1,12 +1,25 @@
 (ns databog.main-test
-  (:require [clojure.test :refer [deftest is testing]]
-            [databog.main]
-            [typed.clojure :as t]))
+  (:require
+    [clojure.test :refer [deftest is testing]]
+    [clojure.test.check :as tc]
+    [databog.main :as d]
+    [databog.tx-data :as d.tx-data]
+    [matcher-combinators.matchers :as m]
+    [matcher-combinators.test]
+    [typed.clj.generators :as t.g]
+    [typed.clojure :as t]))
 
 
 (deftest test-check-types-on-main
-  (is (t/check-ns-clj 'databog.main)))
+  (is (t/check-ns-clj 'databog.main))
+  (is (t/check-ns-clj 'databog.tx-data)))
+
 
 (deftest test-okay
   (testing "does this work?"
     (is (true? false))))
+
+
+(deftest name-test
+  (testing "Context of the test assertions"
+    (is (match? nil))))
