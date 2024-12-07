@@ -3,7 +3,7 @@
  :rules
  {:namespaces
   {:enabled? true,
-   :indent-size 2,
+   :indent-size 1,
    :break-libs? true,
    :import-break-width 60},
   :whitespace
@@ -16,6 +16,7 @@
   :eof-newline {:enabled? true, :trailing-blanks? false},
   :types
   {:enabled? true,
+   :records? true
    :types? true,
    :protocols? true,
    :reifies? true,
@@ -28,7 +29,7 @@
    :padding-lines 1},
   :indentation
   {:enabled? true,
-   :list-indent 2,
+   :list-indent 1,
    :indents
    {are [[:block 2]],
     when-first [[:block 1]],
@@ -96,6 +97,7 @@
     catch [[:block 2]],
     thread [[:block 0]],
     comment [[:block 0]],
+    defalias [[:inner 0]]
     defrecord [[:block 1] [:inner 1]],
     thrown? [[:block 1]],
     when-some [[:block 1]],

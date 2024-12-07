@@ -1,7 +1,7 @@
 (ns typecheck.check
   (:require
-    [databog.main]
-    [typed.clojure :as t]))
+   [databog.main]
+   [typed.clojure :as t]))
 
 (defn -main
   [& _args]
