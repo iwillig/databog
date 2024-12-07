@@ -17,12 +17,16 @@ A library for managing Datalog database systems.
 <!-- markdown-toc end -->
 
 
-## Ideas
+## Ideas/Roadmap
 
-- DOING Typed Clojure annonations for Datom/Datalog datoms
-- TODO GraphQL generation from Datalog Attributes
-- TODO GraphQL validator
-- isort for clojure?
+- [] DOING Typed Clojure annonations for Datom/Datalog datoms
+- [] TODO Catalog System for Datalog Attributes
+- [] TODO Example Schema and implementation with [Datahike](https://github.com/replikativ/datahike)
+- [] TODO Clojure Parsing and Code generations tools
+- [] TODO GraphQL generation from Datalog Attributes
+- [] TODO GraphQL validator
+- [] TODO TypedClojure -> GraphQL?
+- [] TODO isort for clojure?
 
 ## Install
 
