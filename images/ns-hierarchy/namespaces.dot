@@ -3,6 +3,10 @@ graph[dpi=100, rankdir=TP]
 node[fontname="Monospace"]
 edge[fontname="Monospace"]
 
-node1586[label="databog.tx-data", style=solid]
-node1587[label="databog.main", style=solid]
+node1586[label="databog.graphql.parser", style=solid]
+node1587[label="databog.datalog", style=solid]
+node1588[label="databog.datalog.tx-data", style=solid]
+node1589[label="databog.main", style=solid]
+node1590[label="databog.graphql.printer", style=solid]
+node1591[label="databog.graphql", style=solid]
 }
