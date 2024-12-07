@@ -1,15 +1,27 @@
 (ns databog.main
   (:require
-   [typed.clojure :as t]))
+    [typed.clojure :as t]))
 
 
-(t/defalias Attribute t/Keyword)
+(t/defalias DbAttribute t/Keyword)
 (t/defalias Id t/Num)
 (t/defalias TempId t/Num)
 
+(t/defalias DatomAdd
+  (t/HVec [(t/Val :db/add) Id DbAttribute DatomValue]))
+
+(t/defalias DatomRetract
+  (t/HVec [(t/Val :db/retract) Id DbAttribute DatomValue]))
+
 (t/defalias DatomValue (t/U Id t/Bool))
 
-(t/defalias TxDatom  (t/HVec [t/Keyword Id Attribute DatomValue]))
+
+
+(t/defalias TxDatom
+            (t/U (t/HVec [t/Keyword Id DbAttribute DatomValue])
+                 DatomAdd
+                 DatomRetract
+                 (t/HMap :mandatory {:db/id Id})))
 
 (t/defalias TxDatoms (t/Vec TxDatom))
 

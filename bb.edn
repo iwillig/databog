@@ -8,12 +8,12 @@
  {:requires ([babashka.fs :as fs]
              [lread.status-line :as status])
 
-  check
+  type-check
   {:doc  "Task to typed check some of the namespaces"
    :task (do
            (status/line :head "type-checking")
            (time
-            (clojure "-M:dev:check")))}
+            (clojure "-M:dev:type-check")))}
 
   clean
   {:doc  "Cleans the temp build files"

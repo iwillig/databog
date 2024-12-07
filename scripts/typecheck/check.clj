@@ -1,4 +1,4 @@
-(ns typing.check
+(ns typecheck.check
   (:require [typed.clojure :as t]
             [databog.main]))
 
