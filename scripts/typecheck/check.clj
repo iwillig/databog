@@ -1,6 +1,8 @@
 (ns typecheck.check
-  (:require [typed.clojure :as t]
-            [databog.main]))
+  (:require
+    [databog.main]
+    [typed.clojure :as t]))
 
-(defn -main [& _args]
+(defn -main
+  [& _args]
   (t/check-dir-clj "src"))

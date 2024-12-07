@@ -40,9 +40,12 @@
   {:doc  "Run command to detect outdate version of our deps"
    :task (clojure "-M:dev:outdated -m depot.outdated.main")}
 
-  codox
-  {:doc  "Builds codox"
+  doc-codox
+  {:doc  "Builds codox documentation"
    :task (clojure "-X:dev:codox")}
+  doc-hiera
+  {:doc  "Builds hiera documentation"
+   :task (clojure "-X:dev:hiera")}
 
   nrepl
   {:doc  "Run a nRepl"
@@ -50,16 +53,25 @@
           "-M:jvm-base:dev:nrepl" "-m" "nrepl.cmdline")}
 
   fmt
-  {:doc  "Format clojure code"
-   :task (clojure "-M:dev:format -m cljfmt.main fix src dev")}
+  {:doc  "Fix format clojure code"
+   :task
+   (do
+     (clojure "-M:dev:format -m cljstyle.main fix scripts src dev"))}
+
+  fmt-check
+  {:doc  "Check format clojure code"
+   :task
+   (do
+     (clojure "-M:dev:format -m cljstyle.main check scripts src dev"))}
 
   docs
-  {:doc  "Builds documentation"
-   :task (do (run 'codox))}
+  {:doc  "Builds all documentation"
+   :task (do (run 'doc-codox)
+             (run 'doc-hiera))}
 
   ci
   {:doc  "Runs linting and tests for the CI"
    :task (do (run 'clean)
+             (run 'fmt-check)
              (run 'type-check)
-             (run 'lint)
              (run 'test))}}}
