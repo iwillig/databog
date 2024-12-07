@@ -1,5 +1,6 @@
 {:deps
  {org.clojure/clojure                {:mvn/version "1.12.0"}
+  io.replikativ/datahike             {:mvn/version "0.6.1594"}
   org.typedclojure/typed.clj.runtime {:mvn/version "1.2.1"}}
 
  :paths ["src" "dev" "test" "scripts" "resources"]

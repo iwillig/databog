@@ -7,21 +7,30 @@
 (t/defalias Id t/Num)
 (t/defalias TempId t/Num)
 
+
+(t/defalias DatomValue
+            (t/U Id
+                 t/Bool
+                 t/Num))
+
+
 (t/defalias DatomAdd
-  (t/HVec [(t/Val :db/add) Id DbAttribute DatomValue]))
+            (t/HVec [(t/Val :db/add) Id DbAttribute DatomValue]))
+
 
 (t/defalias DatomRetract
-  (t/HVec [(t/Val :db/retract) Id DbAttribute DatomValue]))
+            (t/HVec [(t/Val :db/retract) Id DbAttribute DatomValue]))
 
-(t/defalias DatomValue (t/U Id t/Bool))
 
+(t/defalias DatomMapAdd
+            (t/HMap :mandatory {:db/id Id} :complete? false))
 
 
 (t/defalias TxDatom
-            (t/U (t/HVec [t/Keyword Id DbAttribute DatomValue])
-                 DatomAdd
+            (t/U DatomAdd
                  DatomRetract
-                 (t/HMap :mandatory {:db/id Id})))
+                 DatomMapAdd))
+
 
 (t/defalias TxDatoms (t/Vec TxDatom))
 
@@ -56,8 +65,9 @@
 (defn tx-data
   ([id-key-mappings tx-data]
    (map->TxDataPart
-    {:tx-data     tx-data
-     :id-mappings id-key-mappings})))
+     {:tx-data     tx-data
+      :id-mappings id-key-mappings})))
+
 
 (t/ann tx-data [(t/Vec IdMapping)
                 (t/Vec TxDatom) -> TxDataPart])
