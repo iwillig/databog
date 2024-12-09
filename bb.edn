@@ -39,6 +39,9 @@
            (time
             (clojure "-M:lint -m clj-kondo.main --lint src test")))}
 
+  main {:doc "Run the main command line inteface"
+        :task (clojure "-M:main")}
+
   outdated
   {:doc  "Run command to detect outdate version of our deps"
    :task (clojure "-M:dev:outdated -m depot.outdated.main")}
