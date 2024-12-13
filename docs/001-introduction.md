@@ -20,7 +20,7 @@ databog to iteration your web application development.
 TODO
 
 ```shell
-databog graphql server --schema-file schema.graphql
+databog graphql serve --schema-file schema.graphql
 ```
 
 ## Statically check your GraphQL queries and schema files.
@@ -43,10 +43,39 @@ databog graphql coverage --schema-file schema.graphql --queries queries
 
 TODO
 
-```
+```shell
 databog graphql check-grammar --schema-file schema.graphql --queries queries
 ```
 
+
+## Extract GraphQL Queries and mutations
+
+```shell
+databog typescript find-graphql-queries --app-folder @web-app
+```
+
+## Commands
+
+~~~plantuml
+@startmindmap
+* databog
+** graphql
+*** serve
+*** coverage
+*** check-grammar
+*** api-changelog
+** javascript
+*** find-graphql-queries
+** typescript
+*** find-graphql-queries
+** rest-api
+*** openapi
+*** check-coverage
+@endmindmap
+~~~
+
+
+## Topics
 
 ~~~plantuml
 @startmindmap
