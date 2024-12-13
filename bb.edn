@@ -11,6 +11,8 @@
              [babashka.process :as p]
              [lread.status-line :as status])
 
+;; pandoc -F pandoc-plantuml -t slidy -s malli-model-function-hackathon-2024.md -o malli-model-function-hackathon-2024.html --metadata=plantuml-format=svg
+
   type-check
   {:doc  "Task to typed check some of the namespaces"
    :task (do
@@ -23,7 +25,8 @@
    :task (do
            (status/line :head "clean")
            (fs/delete-tree "target")
-           (fs/delete-if-exists "junit.xml"))}
+           (fs/delete-if-exists "junit.xml")
+           (fs/delete-if-exists "docs.html"))}
 
   test
   {:doc  "Runs the projects with kocha"
@@ -56,7 +59,8 @@
   doc-pandoc
   {:doc "Build pandoc"
    :task (do (shell
-              "pandoc -f markdown -t markdown readme.md --filter bin/t-pandoc"))}
+              "pandoc docs/metadata.yml -f markdown --toc --template docs/template.html -t html -o docs.html docs/001-introduction.md"))}
+
   test-pdoc
   {:doc "Test pandoc transform"
    :task (do (shell "pandoc -f markdown -t json readme.md -o readme.json")

@@ -1,0 +1,16 @@
+---
+title: Databog Documentation
+author: Ivan Willig
+rights: MIT License
+lang: en-US
+mainlang: english
+otherlang: english
+tags: [datalog, book, graphql, etc]
+abstract: |
+  A collection of documents related to the databog project
+mainfont: Cascadia Code
+
+# Filter preferences:
+# - pandoc-crossref
+linkReferences: true
+---
