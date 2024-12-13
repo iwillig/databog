@@ -1,0 +1,15 @@
+@startmindmap
+* databog
+** GraphQL
+*** Relay API
+*** Connections API
+*** Globals IDs
+*** Mutations
+** REST API
+*** HATOS
+*** HTMLX
+*** OpenAPI
+** SQL
+*** SQLite
+** Datalog
+@endmindmap
