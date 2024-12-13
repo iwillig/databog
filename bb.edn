@@ -61,7 +61,7 @@
    :task (do (shell
               "pandoc -F pandoc-plantuml
                 docs/metadata.yml -f markdown
-                --toc --template docs/template.html -t html -o docs.html
+                --toc --template docs/template.html -t markdown -o docs.md
                 docs/001-introduction.md
                 docs/002-install.md
 
