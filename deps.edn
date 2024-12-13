@@ -6,6 +6,7 @@
   clj-antlr/clj-antlr                {:mvn/version "0.2.13"}
   org.clojure/tools.cli              {:mvn/version "1.1.230"}
   metosin/jsonista                   {:mvn/version "0.3.12"}
+  org.clj-commons/clj-http-lite      {:mvn/version "1.0.13"}
   org.typedclojure/typed.clj.runtime {:mvn/version "1.2.1"}}
 
  :paths ["src" "dev" "test" "scripts" "resources"]
