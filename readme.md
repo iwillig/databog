@@ -16,6 +16,10 @@ A library for managing Datalog database systems.
 
 <!-- markdown-toc end -->
 
+## Document notes
+
+https://github.com/wikiti/pandoc-book-template
+
 
 ## Ideas/Roadmap
 

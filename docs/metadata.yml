@@ -7,10 +7,10 @@ mainlang: english
 otherlang: english
 tags: [datalog, book, graphql, etc]
 abstract: |
-  A collection of documents related to the databog project
+  Documentation for the databog project.
 mainfont: Cascadia Code
-
 # Filter preferences:
 # - pandoc-crossref
 linkReferences: true
+plantuml-format: svg
 ---
