@@ -4,6 +4,10 @@ A library for managing Datalog database systems.
 
 ![Namespace Diagrams](images/ns-hierarchy/namespaces.png "Namespace diagram")
 
+## Documentation
+
+For documentation on how to use databog, please see [docs.md](docs.md)
+
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
@@ -15,6 +19,8 @@ A library for managing Datalog database systems.
   - [Documentations](#documentations)
 
 <!-- markdown-toc end -->
+
+
 
 ## Document notes
 
