@@ -2,11 +2,21 @@
   (:require
    [clj-antlr.core :as antlr]
    [clojure.java.io :as io]
+   [clojure.string :as str]
    [clojure.pprint :as pp]
    [clojure.walk :as walk]
    [typed.clojure :as t]))
 
 (set! *warn-on-reflection* true)
+
+(defn- trim-description-value
+  "Given an antlr production of a description
+   Returns a trimed a string value"
+  [^String string-value]
+  (str/trim
+   (subs string-value 3 (- (.length string-value) 3))))
+
+(t/ann trim-description-value [t/Str -> t/Str])
 
 (t/ann clojure.core/slurp [(t/U t/Str
                                 nil
@@ -46,7 +56,15 @@
 (def ^:private ignored-terminals
   "Textual fragments which are to be immediately discarded as they have no
   relevance to a formed parse tree."
-  #{"'{'" "'}'" "'('" "')'" "'['" "']'" "'...'" "'fragment'" "'on'" "type" "&"
+  #{"'{'" "'}'" "'('" "')'" "'['" "']'" "'...'"
+    "'fragment'" "'on'" "type" "&" "interface" "implements"
+    "union"
+    "="
+    "enum"
+    "input"
+    "|"
+    ":"
+    "{" "}"
     "':'" "'='" "'$'" "'!'" "\"" "'@'"})
 
 (t/ann ignored-terminals
@@ -92,23 +110,114 @@
        [t/Str -> parsedGraphQLExpression])
 
 (defrecord Ast
-  [t c])
+  [t c p])
 
-(defn walk
-  [])
+(t/ann-record Ast [t :- t/KW
+                   c :- (t/U (t/Seq t/Any)
+                             t/Any)
+                   p :- t/Any])
+
+
+(defrecord AntlrError [ast])
+
+(t/ann-record AntlrError [ast :- Ast])
+
+(defn ->ast
+  ([t c] (->ast t c nil))
+  ([t c p]
+   (->Ast t c p)))
+
+(defmulti antlr-xform
+  first)
+
+(defmethod antlr-xform :default
+  [[:as antrl-prod]]
+  antrl-prod)
+
+(def transform-xform
+  (comp (remove ignored-terminal?)
+        (map antlr-xform)
+        (remove nil?)))
+
+(defn prep-parsed-antlr-prod
+  [antrl-prod]
+  (into []
+        transform-xform
+        antrl-prod))
+
+(defn build-ast
+  [[type-def & rest-antlr-prod :as args]]
+  (->ast type-def (prep-parsed-antlr-prod rest-antlr-prod) (:clj-antlr/position (meta args))))
+
+
+(def ast-types #{:typeDef
+                 :listType
+                 :argList
+                 :argument
+                 :interfaceDef
+                 :implementationDef
+                 :required
+
+                 :scalarDef
+                 :unionDef
+                 :unionTypes
+
+
+                 :graphqlSchema
+                 :inputValueDef
+                 :inputValueDefs
+                 :inputTypeDef
+                 :enum
+                 :enumDef
+                 :enumValueDefs
+                 :enumValueDef
+
+                 :nameTokens
+                 :anyName
+                 :typeName
+                 :typeSpec
+                 :fieldDefs
+                 :fieldDef
+                 :clj-antlr/error})
+
+(doseq [ast-type ast-types]
+  (defmethod antlr-xform ast-type
+    [antlr-prod]
+    (build-ast antlr-prod)))
+
+(defmethod antlr-xform :description
+  [args]
+  (->ast :description
+         (trim-description-value (second args))
+         (:clj-antlr/position (meta args))))
+
+(defn graphql-schema->ast
+  [gql-string]
+  (antlr-xform (parse-graphql-schema gql-string)))
 
 (comment
-  (:graphqlSchema
-   (:typeDef
-    "type"
-    (:anyName (:nameTokens "Mutation"))
-    (:fieldDefs
-     "{"
-     (:clj-antlr/error
-      (:fieldDef "}" (:anyName (:nameTokens "type")) "Query"))
-     (:clj-antlr/error
-      (:fieldDef (:anyName (:nameTokens "Query")) "{"))
-     "}"))))
+  (ns-unmap *ns* 'antlr-xform)
+
+  )
+
+
+(def x '(:graphqlSchema
+         (:typeDef
+          "type"
+          (:anyName (:nameTokens "Mutation"))
+          (:fieldDefs
+           "{"
+           (:clj-antlr/error
+            (:fieldDef "}" (:anyName (:nameTokens "type")) "Query"))
+           (:clj-antlr/error
+            (:fieldDef (:anyName (:nameTokens "Query")) "{"))
+           "}"))))
+
+(comment
+
+  )
+
+
 
 (comment
   ;; parsed production

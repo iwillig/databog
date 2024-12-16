@@ -4,8 +4,16 @@
     [clojure.test :refer [deftest is testing]]
     [databog.graphql.parser :as d.g.parser]
     [matcher-combinators.test]
+    [jsonista.core :as j]
     [typed.clojure :as t]))
 
+(defn load-schema [path]
+  (-> (io/resource path)
+      (slurp)
+      (d.g.parser/parse-graphql-schema)))
+
+(def example-schema-path "graphql/exampleSchema.graphql")
+(def cat-and-dog-path     "graphql/catAndDog.graphql")
 
 (deftest test-parser-types
 
@@ -15,15 +23,20 @@
 
 
 (deftest test-parsing-example-schemas
-
   (testing "testing basic graphql schemas"
-    (doseq [path ["graphql/exampleSchema.graphql"
-                  #_"graphql/catAndDog.graphql"]]
-      (testing (str "testing:" path)
-        (let [example-schema (slurp (io/resource path))]
+    (doseq [schema-path [#_example-schema-path cat-and-dog-path]
+            :let [parsed-schema (load-schema schema-path)
+                  ast           (d.g.parser/antlr-xform parsed-schema)]]
 
-          (is (match? nil example-schema))
+      (testing (str "testing:" schema-path)
 
-          (let [parsed-schema (d.g.parser/parse-graphql-schema example-schema)]
+        (let []
 
-            (is (match? nil parsed-schema))))))))
+          #_(is (match? nil schema-path))
+
+          #_(is (match? nil parsed-schema))
+          (is (match? nil ast))
+
+          #_(is (match? nil (j/write-value-as-string ast)))
+
+          )))))
