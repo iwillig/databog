@@ -27,7 +27,7 @@
         in-data (pandoc-filter in-string)]
 
 
-    (pp/pprint @total-types)
+    (pp/pprint in-data)
 
     ;; Print the out value
     #_(println (j/write-value-as-string in-data))))

@@ -1,0 +1,15 @@
+@startmindmap
+* databog
+** graphql
+*** serve
+*** coverage
+*** check-grammar
+*** api-changelog
+** javascript
+*** find-graphql-queries
+** typescript
+*** find-graphql-queries
+** rest-api
+*** openapi
+*** check-coverage
+@endmindmap

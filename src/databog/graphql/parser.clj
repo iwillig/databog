@@ -91,8 +91,24 @@
 (t/ann parse-graphql-expression
        [t/Str -> parsedGraphQLExpression])
 
-(defrecord GqlExp
+(defrecord Ast
   [t c])
+
+(defn walk
+  [])
+
+(comment
+  (:graphqlSchema
+   (:typeDef
+    "type"
+    (:anyName (:nameTokens "Mutation"))
+    (:fieldDefs
+     "{"
+     (:clj-antlr/error
+      (:fieldDef "}" (:anyName (:nameTokens "type")) "Query"))
+     (:clj-antlr/error
+      (:fieldDef (:anyName (:nameTokens "Query")) "{"))
+     "}"))))
 
 (comment
   ;; parsed production
