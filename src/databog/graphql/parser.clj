@@ -5,6 +5,7 @@
    [clojure.string :as str]
    [clojure.pprint :as pp]
    [clojure.walk :as walk]
+   [clojure.zip :as z]
    [typed.clojure :as t]))
 
 (set! *warn-on-reflection* true)
@@ -56,8 +57,12 @@
 (def ^:private ignored-terminals
   "Textual fragments which are to be immediately discarded as they have no
   relevance to a formed parse tree."
-  #{"'{'" "'}'" "'('" "')'" "'['" "']'" "'...'"
-    "'fragment'" "'on'" "type" "&" "interface" "implements"
+  #{"fragment"
+    "on"
+    "type"
+    "&"
+    "interface"
+    "implements"
     "union"
     "="
     "enum"
@@ -65,7 +70,13 @@
     "|"
     ":"
     "{" "}"
-    "':'" "'='" "'$'" "'!'" "\"" "'@'"})
+    "(" ")"
+    "[" "]"
+    "..."
+    "$"
+    "!"
+    "\""
+    "@"})
 
 (t/ann ignored-terminals
        (t/Set t/Str))
@@ -134,6 +145,8 @@
   [[:as antrl-prod]]
   antrl-prod)
 
+(declare build-ast)
+
 (def transform-xform
   (comp (remove ignored-terminal?)
         (map antlr-xform)
@@ -147,8 +160,9 @@
 
 (defn build-ast
   [[type-def & rest-antlr-prod :as args]]
-  (->ast type-def (prep-parsed-antlr-prod rest-antlr-prod) (:clj-antlr/position (meta args))))
-
+  (->ast type-def
+         (prep-parsed-antlr-prod rest-antlr-prod)
+         (:clj-antlr/position (meta args))))
 
 (def ast-types #{:typeDef
                  :listType
@@ -195,10 +209,18 @@
   [gql-string]
   (antlr-xform (parse-graphql-schema gql-string)))
 
-(comment
-  (ns-unmap *ns* 'antlr-xform)
 
-  )
+(defn tree-seq-with-parent
+  [branch? childern root]
+  (let [walk (fn walk [parent node]
+               (lazy-seq
+                (cons
+                 (if (associative? node)
+                   (assoc node :parent parent)
+                   node)
+                 (when (branch? node)
+                   (mapcat (partial walk node) (childern node))))))]
+    (walk nil root)))
 
 
 (def x '(:graphqlSchema
@@ -212,6 +234,7 @@
            (:clj-antlr/error
             (:fieldDef (:anyName (:nameTokens "Query")) "{"))
            "}"))))
+
 
 (comment
 
