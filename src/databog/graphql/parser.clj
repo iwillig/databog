@@ -2,8 +2,8 @@
   (:require
    [clj-antlr.core :as antlr]
    [clojure.java.io :as io]
-   [clojure.string :as str]
    [clojure.pprint :as pp]
+   [clojure.string :as str]
    [clojure.walk :as walk]
    [clojure.zip :as z]
    [typed.clojure :as t]))
@@ -128,10 +128,14 @@
                              t/Any)
                    p :- t/Any])
 
-
-(defrecord AntlrError [ast])
+(defrecord AntlrError
+  [ast])
 
 (t/ann-record AntlrError [ast :- Ast])
+
+(defn ast?
+  [x]
+  (instance? Ast x))
 
 (defn ->ast
   ([t c] (->ast t c nil))
@@ -164,35 +168,36 @@
          (prep-parsed-antlr-prod rest-antlr-prod)
          (:clj-antlr/position (meta args))))
 
-(def ast-types #{:typeDef
-                 :listType
-                 :argList
-                 :argument
-                 :interfaceDef
-                 :implementationDef
-                 :required
+(def ast-types
+  #{:typeDef
+    :listType
+    :argList
+    :argument
+    :interfaceDef
+    :implementationDef
+    :required
 
-                 :scalarDef
-                 :unionDef
-                 :unionTypes
+    :scalarDef
+    :unionDef
+    :unionTypes
 
 
-                 :graphqlSchema
-                 :inputValueDef
-                 :inputValueDefs
-                 :inputTypeDef
-                 :enum
-                 :enumDef
-                 :enumValueDefs
-                 :enumValueDef
+    :graphqlSchema
+    :inputValueDef
+    :inputValueDefs
+    :inputTypeDef
+    :enum
+    :enumDef
+    :enumValueDefs
+    :enumValueDef
 
-                 :nameTokens
-                 :anyName
-                 :typeName
-                 :typeSpec
-                 :fieldDefs
-                 :fieldDef
-                 :clj-antlr/error})
+    :nameTokens
+    :anyName
+    :typeName
+    :typeSpec
+    :fieldDefs
+    :fieldDef
+    :clj-antlr/error})
 
 (doseq [ast-type ast-types]
   (defmethod antlr-xform ast-type
@@ -209,10 +214,10 @@
   [gql-string]
   (antlr-xform (parse-graphql-schema gql-string)))
 
-
 (defn tree-seq-with-parent
   [branch? childern root]
-  (let [walk (fn walk [parent node]
+  (let [walk (fn walk
+               [parent node]
                (lazy-seq
                 (cons
                  (if (associative? node)
@@ -222,25 +227,43 @@
                    (mapcat (partial walk node) (childern node))))))]
     (walk nil root)))
 
+(defn flatten-antlr-tree
+  [flatten-antlr-tree])
 
-(def x '(:graphqlSchema
-         (:typeDef
-          "type"
-          (:anyName (:nameTokens "Mutation"))
-          (:fieldDefs
-           "{"
-           (:clj-antlr/error
-            (:fieldDef "}" (:anyName (:nameTokens "type")) "Query"))
-           (:clj-antlr/error
-            (:fieldDef (:anyName (:nameTokens "Query")) "{"))
-           "}"))))
+(defn ast-branch?
+  [x]
+  (and (map? x)
+       (contains? x :c)))
 
+(defn leafs
+  [ast]
+  (filter ast?
+          (tree-seq-with-parent ast-branch?
+                                :c ast)))
+
+(def x
+  '(:graphqlSchema
+    (:typeDef
+     "type"
+     (:anyName (:nameTokens "Mutation"))
+     (:fieldDefs
+      "{"
+      (:clj-antlr/error
+       (:fieldDef "}" (:anyName (:nameTokens "type")) "Query"))
+      (:clj-antlr/error
+       (:fieldDef (:anyName (:nameTokens "Query")) "{"))
+      "}"))))
 
 (comment
 
+
+
+
+  (leafs (antlr-xform x))
+
+
+
   )
-
-
 
 (comment
   ;; parsed production
