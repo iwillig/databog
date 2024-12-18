@@ -37,7 +37,7 @@
            {:deps      {io.github.greglook/clj-hiera
                         {:git/tag "2.0.0", :git/sha "b14e514"}}
             :exec-fn   hiera.main/graph
-            :exec-args {:source-paths ["src"]
+            :exec-args {:source-paths ["src" "test"]
                         :output       "images/ns-hierarchy"}}
 
            :nrepl
