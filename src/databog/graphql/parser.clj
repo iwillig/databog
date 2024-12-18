@@ -2,7 +2,6 @@
   (:require
    [clj-antlr.core :as antlr]
    [clojure.java.io :as io]
-   [clojure.pprint :as pp]
    [clojure.string :as str]
    [clojure.walk :as walk]
    [clojure.zip :as z]
@@ -227,8 +226,6 @@
                    (mapcat (partial walk node) (childern node))))))]
     (walk nil root)))
 
-(defn flatten-antlr-tree
-  [flatten-antlr-tree])
 
 (defn ast-branch?
   [x]

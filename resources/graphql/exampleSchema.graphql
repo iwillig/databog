@@ -1,12 +1,20 @@
-
+"""
+This is an text
+"""
 type Node {
   id: String
 }
-
+## This is a comment
+"""
+Mutations
+"""
 type Mutation {
   addNode: Node
 }
 
+"""
+Queries
+"""
 type Query {
   nodes: [Node]
 }

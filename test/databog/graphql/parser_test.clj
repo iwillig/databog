@@ -21,22 +21,20 @@
 
     #_(is (t/check-ns-clj 'databog.graphql.parser))))
 
-
 (deftest test-parsing-example-schemas
   (testing "testing basic graphql schemas"
-    (doseq [schema-path [#_example-schema-path cat-and-dog-path]
+    (doseq [schema-path [example-schema-path #_cat-and-dog-path]
             :let [parsed-schema (load-schema schema-path)
-                  ast           (d.g.parser/antlr-xform parsed-schema)]]
+                  ast           (d.g.parser/antlr-xform parsed-schema)
+                  leafs         (d.g.parser/leafs ast)]]
 
       (testing (str "testing:" schema-path)
 
-        (let []
 
-          #_(is (match? nil schema-path))
+        (is (match? nil
+                    (map (juxt (comp :t :parent) :t)
+                         leafs)))
 
-          #_(is (match? nil parsed-schema))
-          (is (match? nil ast))
+        (is (match? nil ast))
 
-          #_(is (match? nil (j/write-value-as-string ast)))
-
-          )))))
+        ))))
